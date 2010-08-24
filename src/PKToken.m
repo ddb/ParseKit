@@ -14,6 +14,7 @@
 
 #import <ParseKit/PKToken.h>
 #import <ParseKit/PKTypes.h>
+#import "NSString+ParseKitAdditions.h"
 
 @interface PKTokenEOF : PKToken {}
 + (PKTokenEOF *)instance;
@@ -202,6 +203,11 @@ static PKTokenEOF *EOFToken = nil;
         self.value = v;
     }
     return value;
+}
+
+
+- (NSString *)quotedStringValue {
+    return [stringValue stringByTrimmingQuotes];
 }
 
 

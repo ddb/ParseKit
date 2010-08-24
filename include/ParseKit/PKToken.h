@@ -183,6 +183,12 @@ typedef enum {
 @property (nonatomic, readonly, copy) NSString *stringValue;
 
 /*!
+    @property   stringValue
+    @brief      If a QuotedString, the string value of this token minus the quotes. Otherwise the stringValue.
+ */
+@property (nonatomic, readonly, copy) NSString *quotedStringValue;
+
+/*!
     @property   value
     @brief      Returns an object that represents the value of this token.
 */
