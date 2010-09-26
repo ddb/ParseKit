@@ -13,6 +13,7 @@
 - (void)setUp {
     t = [[PKTokenizer alloc] init];
     twitterState = t.twitterState;
+    [t setTokenizerState:twitterState from:'@' to:'@'];
 }
 
 
