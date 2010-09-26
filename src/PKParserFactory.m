@@ -113,7 +113,8 @@ void PKReleaseSubparserTree(PKParser *p) {
 
 - (void)didMatchStatement:(PKAssembly *)a;
 - (void)didMatchCallback:(PKAssembly *)a;
-- (void)didMatchExpression:(PKAssembly *)a;
+- (void)didMatchExpr:(PKAssembly *)a;
+- (void)didMatchTrackTerm:(PKAssembly *)a;
 - (void)didMatchAnd:(PKAssembly *)a;
 - (void)didMatchIntersection:(PKAssembly *)a;    
 - (void)didMatchDifference:(PKAssembly *)a;
@@ -142,6 +143,7 @@ void PKReleaseSubparserTree(PKParser *p) {
 @property (nonatomic, retain) PKToken *equals;
 @property (nonatomic, retain) PKToken *curly;
 @property (nonatomic, retain) PKToken *paren;
+@property (nonatomic, retain) PKToken *square;
 @end
 
 @implementation PKParserFactory
@@ -157,6 +159,7 @@ void PKReleaseSubparserTree(PKParser *p) {
         self.equals  = [PKToken tokenWithTokenType:PKTokenTypeSymbol stringValue:@"=" floatValue:0.0];
         self.curly   = [PKToken tokenWithTokenType:PKTokenTypeSymbol stringValue:@"{" floatValue:0.0];
         self.paren   = [PKToken tokenWithTokenType:PKTokenTypeSymbol stringValue:@"(" floatValue:0.0];
+        self.square  = [PKToken tokenWithTokenType:PKTokenTypeSymbol stringValue:@"[" floatValue:0.0];
         self.assemblerSettingBehavior = PKParserFactoryAssemblerSettingBehaviorOnAll;
     }
     return self;
@@ -173,6 +176,7 @@ void PKReleaseSubparserTree(PKParser *p) {
     self.equals = nil;
     self.curly = nil;
     self.paren = nil;
+    self.square = nil;
     [super dealloc];
 }
 
@@ -665,7 +669,24 @@ void PKReleaseSubparserTree(PKParser *p) {
 }
 
 
-- (void)didMatchExpression:(PKAssembly *)a {
+- (void)didMatchTrackTerm:(PKAssembly *)a {
+    NSArray *objs = [a objectsAbove:square];
+    NSAssert([objs count], @"");
+    [a pop]; // pop '['
+    
+    if ([objs count] > 1) {
+        PKSequence *seq = [PKTrack track];
+        for (id obj in [objs reverseObjectEnumerator]) {
+            [seq add:obj];
+        }
+        [a push:seq];
+    } else if ([objs count]) {
+        [a push:[objs objectAtIndex:0]];
+    }
+}
+
+
+- (void)didMatchExpr:(PKAssembly *)a {
     NSArray *objs = [a objectsAbove:paren];
     NSAssert([objs count], @"");
     [a pop]; // pop '('
@@ -975,5 +996,6 @@ void PKReleaseSubparserTree(PKParser *p) {
 @synthesize equals;
 @synthesize curly;
 @synthesize paren;
+@synthesize square;
 @synthesize assemblerSettingBehavior;
 @end

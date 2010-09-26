@@ -22,6 +22,8 @@
     PKCollectionParser *selectorParser;
     PKCollectionParser *exprParser;
     PKCollectionParser *termParser;
+    PKCollectionParser *trackTermParser;
+    PKCollectionParser *seqTermParser;
     PKCollectionParser *orTermParser;
     PKCollectionParser *factorParser;
     PKCollectionParser *nextFactorParser;
@@ -55,6 +57,8 @@
 @property (nonatomic, retain) PKCollectionParser *selectorParser;
 @property (nonatomic, retain) PKCollectionParser *exprParser;
 @property (nonatomic, retain) PKCollectionParser *termParser;
+@property (nonatomic, retain) PKCollectionParser *trackTermParser;
+@property (nonatomic, retain) PKCollectionParser *seqTermParser;
 @property (nonatomic, retain) PKCollectionParser *orTermParser;
 @property (nonatomic, retain) PKCollectionParser *factorParser;
 @property (nonatomic, retain) PKCollectionParser *nextFactorParser;

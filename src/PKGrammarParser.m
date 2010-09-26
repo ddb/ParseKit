@@ -18,7 +18,8 @@
 @interface NSObject (PKGrammarParserAdditions)
 - (void)didMatchStatement:(PKAssembly *)a;
 - (void)didMatchCallback:(PKAssembly *)a;
-- (void)didMatchExpression:(PKAssembly *)a;
+- (void)didMatchExpr:(PKAssembly *)a;
+- (void)didMatchTrackTerm:(PKAssembly *)a;
 - (void)didMatchAnd:(PKAssembly *)a;
 - (void)didMatchIntersection:(PKAssembly *)a;    
 - (void)didMatchDifference:(PKAssembly *)a;
@@ -66,6 +67,8 @@
     self.selectorParser = nil;
     self.exprParser = nil;
     self.termParser = nil;
+    self.trackTermParser = nil;
+    self.seqTermParser = nil;
     self.orTermParser = nil;
     self.factorParser = nil;
     self.nextFactorParser = nil;
@@ -114,7 +117,9 @@
 // callback             = S* '(' S* selector S* ')';
 // selector             = Word ':';
 // expr                 = S* term orTerm* S*;
-// term                 = factor nextFactor*;
+// term                 = trackTerm | seqTerm;
+// trackTerm            = '[' S* seqTerm S* ']';
+// seqTerm              = factor nextFactor*;
 // orTerm               = S* '|' S* term;
 // factor               = phrase | phraseStar | phrasePlus | phraseQuestion | phraseCardinality;
 // nextFactor           = S factor;
@@ -219,22 +224,51 @@
         [exprParser add:self.termParser];
         [exprParser add:[PKRepetition repetitionWithSubparser:self.orTermParser]];
         [exprParser add:self.optionalWhitespaceParser];
-        [exprParser setAssembler:assembler selector:@selector(didMatchExpression:)];
+        [exprParser setAssembler:assembler selector:@selector(didMatchExpr:)];
     }
     return exprParser;
 }
 
 
-// term                = factor nextFactor*;
+// term                 = trackTerm | seqTerm;
 - (PKCollectionParser *)termParser {
     if (!termParser) {
-        self.termParser = [PKSequence sequence];
+        self.termParser = [PKAlternation alternation];
         termParser.name = @"term";
-        [termParser add:self.factorParser];
-        [termParser add:[PKRepetition repetitionWithSubparser:self.nextFactorParser]];
-        [termParser setAssembler:assembler selector:@selector(didMatchAnd:)];
+        [termParser add:self.trackTermParser];
+        [termParser add:self.seqTermParser];
     }
     return termParser;
+}
+
+
+// trackTerm            = '[' S* seqTerm S* ']';
+- (PKCollectionParser *)trackTermParser {
+    if (!trackTermParser) {
+        self.trackTermParser = [PKSequence sequence];
+        trackTermParser.name = @"trackTerm";
+        
+        [trackTermParser add:[PKSymbol symbolWithString:@"["]]; // preserve as fence
+        [trackTermParser add:self.optionalWhitespaceParser];
+        [trackTermParser add:self.seqTermParser];
+        [trackTermParser add:self.optionalWhitespaceParser];
+        [trackTermParser add:[[PKSymbol symbolWithString:@"]"] discard]];
+        
+        [trackTermParser setAssembler:assembler selector:@selector(didMatchTrackTerm:)];
+    }
+    return trackTermParser;
+}
+
+
+// seqTerm              = factor nextFactor*;
+- (PKCollectionParser *)seqTermParser {
+    if (!seqTermParser) {
+        self.seqTermParser = [PKSequence sequence];
+        seqTermParser.name = @"seqTerm";
+        [seqTermParser add:self.factorParser];
+        [seqTermParser add:[PKRepetition repetitionWithSubparser:self.nextFactorParser]];
+    }
+    return seqTermParser;
 }
 
 
@@ -337,7 +371,7 @@
         [barePrimaryExprParser add:self.atomicValueParser];
         
         PKSequence *s = [PKSequence sequence];
-        [s add:[PKSymbol symbolWithString:@"("]];
+        [s add:[PKSymbol symbolWithString:@"("]]; // preserve as fence
         [s add:self.exprParser];
         [s add:[[PKSymbol symbolWithString:@")"] discard]];
         
@@ -620,6 +654,8 @@
 @synthesize selectorParser;
 @synthesize exprParser;
 @synthesize termParser;
+@synthesize trackTermParser;
+@synthesize seqTermParser;
 @synthesize orTermParser;
 @synthesize factorParser;
 @synthesize nextFactorParser;
