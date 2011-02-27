@@ -27,11 +27,11 @@
 #import <OCMock/OCMock.h>
 
 @protocol TDMockAssember
-- (void)didMatchFoo:(PKAssembly *)a;
-- (void)didMatchBaz:(PKAssembly *)a;
-- (void)didMatchStart:(PKAssembly *)a;
-- (void)didMatchStart:(PKAssembly *)a;
-- (void)didMatch_Start:(PKAssembly *)a;
+- (void)parser:(PKParser *)p didMatchFoo:(PKAssembly *)a;
+- (void)parser:(PKParser *)p didMatchBaz:(PKAssembly *)a;
+- (void)parser:(PKParser *)p didMatchStart:(PKAssembly *)a;
+- (void)parser:(PKParser *)p didMatchStart:(PKAssembly *)a;
+- (void)parser:(PKParser *)p didMatch_Start:(PKAssembly *)a;
 @end
 
 @interface PKParserFactory ()
@@ -382,7 +382,7 @@
 //    id mock = [OCMockObject mockForProtocol:@protocol(TDMockAssember)];
 //    PKParserFactory *factory = [PKParserFactory factory];
 //    NSString *s = nil;
-//    s = @"@start = foo|baz; foo (didMatchFooAssembly:) = 'bar'; baz (didMatchBazAssembly:) = 'bat'";
+//    s = @"@start = foo|baz; foo (parser:didMatchFooAssembly:) = 'bar'; baz (parser:didMatchBazAssembly:) = 'bat'";
 //    factory.assemblerSettingBehavior = PKParserFactoryAssemblerSettingBehaviorOnExplicit;
 //    PKParser *lp = [factory parserFromGrammar:s assembler:mock];
 //    

@@ -16,27 +16,27 @@
 #import <ParseKit/ParseKit.h>
 
 @interface NSObject (PKGrammarParserAdditions)
-- (void)didMatchStatement:(PKAssembly *)a;
-- (void)didMatchCallback:(PKAssembly *)a;
-- (void)didMatchExpression:(PKAssembly *)a;
-- (void)didMatchAnd:(PKAssembly *)a;
-- (void)didMatchIntersection:(PKAssembly *)a;    
-- (void)didMatchDifference:(PKAssembly *)a;
-- (void)didMatchPatternOptions:(PKAssembly *)a;
-- (void)didMatchPattern:(PKAssembly *)a;
-- (void)didMatchDiscard:(PKAssembly *)a;
-- (void)didMatchLiteral:(PKAssembly *)a;
-- (void)didMatchVariable:(PKAssembly *)a;
-- (void)didMatchConstant:(PKAssembly *)a;
-- (void)didMatchDelimitedString:(PKAssembly *)a;
-- (void)didMatchNum:(PKAssembly *)a;
-- (void)didMatchStar:(PKAssembly *)a;
-- (void)didMatchPlus:(PKAssembly *)a;
-- (void)didMatchQuestion:(PKAssembly *)a;
-- (void)didMatchPhraseCardinality:(PKAssembly *)a;
-- (void)didMatchCardinality:(PKAssembly *)a;
-- (void)didMatchOr:(PKAssembly *)a;
-- (void)didMatchNegation:(PKAssembly *)a;
+- (void)parser:(PKParser *)p didMatchStatement:(PKAssembly *)a;
+- (void)parser:(PKParser *)p didMatchCallback:(PKAssembly *)a;
+- (void)parser:(PKParser *)p didMatchExpression:(PKAssembly *)a;
+- (void)parser:(PKParser *)p didMatchAnd:(PKAssembly *)a;
+- (void)parser:(PKParser *)p didMatchIntersection:(PKAssembly *)a;    
+- (void)parser:(PKParser *)p didMatchDifference:(PKAssembly *)a;
+- (void)parser:(PKParser *)p didMatchPatternOptions:(PKAssembly *)a;
+- (void)parser:(PKParser *)p didMatchPattern:(PKAssembly *)a;
+- (void)parser:(PKParser *)p didMatchDiscard:(PKAssembly *)a;
+- (void)parser:(PKParser *)p didMatchLiteral:(PKAssembly *)a;
+- (void)parser:(PKParser *)p didMatchVariable:(PKAssembly *)a;
+- (void)parser:(PKParser *)p didMatchConstant:(PKAssembly *)a;
+- (void)parser:(PKParser *)p didMatchDelimitedString:(PKAssembly *)a;
+- (void)parser:(PKParser *)p didMatchNum:(PKAssembly *)a;
+- (void)parser:(PKParser *)p didMatchStar:(PKAssembly *)a;
+- (void)parser:(PKParser *)p didMatchPlus:(PKAssembly *)a;
+- (void)parser:(PKParser *)p didMatchQuestion:(PKAssembly *)a;
+- (void)parser:(PKParser *)p didMatchPhraseCardinality:(PKAssembly *)a;
+- (void)parser:(PKParser *)p didMatchCardinality:(PKAssembly *)a;
+- (void)parser:(PKParser *)p didMatchOr:(PKAssembly *)a;
+- (void)parser:(PKParser *)p didMatchNegation:(PKAssembly *)a;
 @end
 
 @interface PKGrammarParser ()
@@ -159,7 +159,7 @@
         [tr add:[self oneOrMore:[PKAny any]]];
         
         [statementParser add:tr];
-        [statementParser setAssembler:assembler selector:@selector(didMatchStatement:)];
+        [statementParser setAssembler:assembler selector:@selector(parser:didMatchStatement:)];
     }
     return statementParser;
 }
@@ -192,7 +192,7 @@
         [tr add:[[PKSymbol symbolWithString:@")"] discard]];
         
         [callbackParser add:tr];
-        [callbackParser setAssembler:assembler selector:@selector(didMatchCallback:)];
+        [callbackParser setAssembler:assembler selector:@selector(parser:didMatchCallback:)];
     }
     return callbackParser;
 }
@@ -219,7 +219,7 @@
         [exprParser add:self.termParser];
         [exprParser add:[PKRepetition repetitionWithSubparser:self.orTermParser]];
         [exprParser add:self.optionalWhitespaceParser];
-        [exprParser setAssembler:assembler selector:@selector(didMatchExpression:)];
+        [exprParser setAssembler:assembler selector:@selector(parser:didMatchExpression:)];
     }
     return exprParser;
 }
@@ -232,7 +232,7 @@
         termParser.name = @"term";
         [termParser add:self.factorParser];
         [termParser add:[PKRepetition repetitionWithSubparser:self.nextFactorParser]];
-        [termParser setAssembler:assembler selector:@selector(didMatchAnd:)];
+        [termParser setAssembler:assembler selector:@selector(parser:didMatchAnd:)];
     }
     return termParser;
 }
@@ -251,7 +251,7 @@
         [tr add:self.termParser];
         
         [orTermParser add:tr];
-        [orTermParser setAssembler:assembler selector:@selector(didMatchOr:)];
+        [orTermParser setAssembler:assembler selector:@selector(parser:didMatchOr:)];
     }
     return orTermParser;
 }
@@ -323,7 +323,7 @@
         negatedPrimaryExprParser.name = @"negatedPrimaryExpr";
         [negatedPrimaryExprParser add:[[PKLiteral literalWithString:@"~"] discard]];
         [negatedPrimaryExprParser add:self.barePrimaryExprParser];
-        [negatedPrimaryExprParser setAssembler:assembler selector:@selector(didMatchNegation:)];
+        [negatedPrimaryExprParser setAssembler:assembler selector:@selector(parser:didMatchNegation:)];
     }
     return negatedPrimaryExprParser;
 }
@@ -376,7 +376,7 @@
         [tr add:self.primaryExprParser];
         
         [intersectionParser add:tr];
-        [intersectionParser setAssembler:assembler selector:@selector(didMatchIntersection:)];
+        [intersectionParser setAssembler:assembler selector:@selector(parser:didMatchIntersection:)];
     }
     return intersectionParser;
 }
@@ -394,7 +394,7 @@
         [tr add:self.primaryExprParser];
         
         [differenceParser add:tr];
-        [differenceParser setAssembler:assembler selector:@selector(didMatchDifference:)];
+        [differenceParser setAssembler:assembler selector:@selector(parser:didMatchDifference:)];
     }
     return differenceParser;
 }
@@ -408,7 +408,7 @@
         [phraseStarParser add:self.phraseParser];
         [phraseStarParser add:self.optionalWhitespaceParser];
         [phraseStarParser add:[[PKSymbol symbolWithString:@"*"] discard]];
-        [phraseStarParser setAssembler:assembler selector:@selector(didMatchStar:)];
+        [phraseStarParser setAssembler:assembler selector:@selector(parser:didMatchStar:)];
     }
     return phraseStarParser;
 }
@@ -422,7 +422,7 @@
         [phrasePlusParser add:self.phraseParser];
         [phrasePlusParser add:self.optionalWhitespaceParser];
         [phrasePlusParser add:[[PKSymbol symbolWithString:@"+"] discard]];
-        [phrasePlusParser setAssembler:assembler selector:@selector(didMatchPlus:)];
+        [phrasePlusParser setAssembler:assembler selector:@selector(parser:didMatchPlus:)];
     }
     return phrasePlusParser;
 }
@@ -436,7 +436,7 @@
         [phraseQuestionParser add:self.phraseParser];
         [phraseQuestionParser add:self.optionalWhitespaceParser];
         [phraseQuestionParser add:[[PKSymbol symbolWithString:@"?"] discard]];
-        [phraseQuestionParser setAssembler:assembler selector:@selector(didMatchQuestion:)];
+        [phraseQuestionParser setAssembler:assembler selector:@selector(parser:didMatchQuestion:)];
     }
     return phraseQuestionParser;
 }
@@ -450,7 +450,7 @@
         [phraseCardinalityParser add:self.phraseParser];
         [phraseCardinalityParser add:self.optionalWhitespaceParser];
         [phraseCardinalityParser add:self.cardinalityParser];
-        [phraseCardinalityParser setAssembler:assembler selector:@selector(didMatchPhraseCardinality:)];
+        [phraseCardinalityParser setAssembler:assembler selector:@selector(parser:didMatchPhraseCardinality:)];
     }
     return phraseCardinalityParser;
 }
@@ -477,7 +477,7 @@
         [tr add:[[PKSymbol symbolWithString:@"}"] discard]];
         
         [cardinalityParser add:tr];
-        [cardinalityParser setAssembler:assembler selector:@selector(didMatchCardinality:)];
+        [cardinalityParser setAssembler:assembler selector:@selector(parser:didMatchCardinality:)];
     }
     return cardinalityParser;
 }
@@ -517,7 +517,7 @@
         discardParser.name = @"discard";
         [discardParser add:self.optionalWhitespaceParser];
         [discardParser add:[[PKSymbol symbolWithString:@"!"] discard]];
-        [discardParser setAssembler:assembler selector:@selector(didMatchDiscard:)];
+        [discardParser setAssembler:assembler selector:@selector(parser:didMatchDiscard:)];
     }
     return discardParser;
 }
@@ -534,10 +534,10 @@
         PKIntersection *inter = [PKIntersection intersection];
         [inter add:[PKWord word]];
         [inter add:opts];
-        [inter setAssembler:assembler selector:@selector(didMatchPatternOptions:)];
+        [inter setAssembler:assembler selector:@selector(parser:didMatchPatternOptions:)];
         
         [patternParser add:[self zeroOrOne:inter]];
-        [patternParser setAssembler:assembler selector:@selector(didMatchPattern:)];
+        [patternParser setAssembler:assembler selector:@selector(parser:didMatchPattern:)];
     }
     return patternParser;
 }
@@ -567,7 +567,7 @@
         [delimitedStringParser add:self.optionalWhitespaceParser];
         [delimitedStringParser add:[[PKSymbol symbolWithString:@")"] discard]];
         
-        [delimitedStringParser setAssembler:assembler selector:@selector(didMatchDelimitedString:)];
+        [delimitedStringParser setAssembler:assembler selector:@selector(parser:didMatchDelimitedString:)];
     }
     return delimitedStringParser;
 }
@@ -577,7 +577,7 @@
 - (PKParser *)literalParser {
     if (!literalParser) {
         self.literalParser = [PKQuotedString quotedString];
-        [literalParser setAssembler:assembler selector:@selector(didMatchLiteral:)];
+        [literalParser setAssembler:assembler selector:@selector(parser:didMatchLiteral:)];
     }
     return literalParser;
 }
@@ -588,7 +588,7 @@
     if (!variableParser) {
         self.variableParser = [PKLowercaseWord word];
         variableParser.name = @"variable";
-        [variableParser setAssembler:assembler selector:@selector(didMatchVariable:)];
+        [variableParser setAssembler:assembler selector:@selector(parser:didMatchVariable:)];
     }
     return variableParser;
 }
@@ -599,7 +599,7 @@
     if (!constantParser) {
         self.constantParser = [PKUppercaseWord word];
         constantParser.name = @"constant";
-        [constantParser setAssembler:assembler selector:@selector(didMatchConstant:)];
+        [constantParser setAssembler:assembler selector:@selector(parser:didMatchConstant:)];
     }
     return constantParser;
 }

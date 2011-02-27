@@ -110,7 +110,7 @@
     if (preassembler) {
         NSAssert2([preassembler respondsToSelector:preassemblerSelector], @"provided preassembler %@ should respond to %s", preassembler, preassemblerSelector);
         for (PKAssembly *a in inAssemblies) {
-            [preassembler performSelector:preassemblerSelector withObject:a];
+            [preassembler performSelector:preassemblerSelector withObject:self withObject:a];
         }
     }
     
@@ -126,7 +126,7 @@
     if (assembler) {
         NSAssert2([assembler respondsToSelector:assemblerSelector], @"provided assembler %@ should respond to %s", assembler, assemblerSelector);
         for (PKAssembly *a in outAssemblies) {
-            [assembler performSelector:assemblerSelector withObject:a];
+            [assembler performSelector:assemblerSelector withObject:self withObject:a];
         }
     }
     return outAssemblies;
