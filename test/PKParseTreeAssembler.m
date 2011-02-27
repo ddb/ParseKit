@@ -68,15 +68,18 @@
 }
 
 
-- (id)performSelector:(SEL)sel withObject:(id)obj {
+- (id)performSelector:(SEL)sel withObject:(id)obj withObject:(id)obj1 {
     NSString *selName = NSStringFromSelector(sel);
     
+    //PKParser *p = obj;
+    PKAssembly *a = obj1;
+    
     if ([selName hasPrefix:assemblerPrefix] && [selName hasSuffix:suffix]) {
-        [self didMatchRuleNamed:[self ruleNameForSelName:selName withPrefix:assemblerPrefix] assembly:obj];
+        [self didMatchRuleNamed:[self ruleNameForSelName:selName withPrefix:assemblerPrefix] assembly:a];
     } else if ([selName hasPrefix:preassemblerPrefix] && [selName hasSuffix:suffix]) {
-        [self willMatchRuleNamed:[self ruleNameForSelName:selName withPrefix:preassemblerPrefix] assembly:obj];
+        [self willMatchRuleNamed:[self ruleNameForSelName:selName withPrefix:preassemblerPrefix] assembly:a];
     } else if ([super respondsToSelector:sel]) {
-        return [super performSelector:sel withObject:obj];
+        return [super performSelector:sel withObject:obj withObject:obj1];
     } else {
         NSAssert(0, @"");
     }
