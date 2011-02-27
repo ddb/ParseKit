@@ -103,7 +103,7 @@
 #ifdef TARGET_OS_SNOW_LEOPARD
     if (preassemblerBlock) {
         for (PKAssembly *a in inAssemblies) {
-            preassemblerBlock(a);
+            preassemblerBlock(self, a);
         }
     } else 
 #endif
@@ -119,7 +119,7 @@
 #ifdef TARGET_OS_SNOW_LEOPARD
     if (assemblerBlock) {
         for (PKAssembly *a in outAssemblies) {
-            assemblerBlock(a);
+            assemblerBlock(self, a);
         }
     } else 
 #endif

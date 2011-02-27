@@ -16,6 +16,9 @@
 
 @class PKAssembly;
 @class PKTokenizer;
+@class PKParser;
+
+typedef void (^PKAssemblerBlock)(PKParser *, PKAssembly *);
 
 /*!
     @class      PKParser 
@@ -42,8 +45,8 @@
 */
 @interface PKParser : NSObject {
 #ifdef TARGET_OS_SNOW_LEOPARD
-    void (^assemblerBlock)(PKAssembly *);
-    void (^preassemblerBlock)(PKAssembly *);
+    PKAssemblerBlock assemblerBlock;
+    PKAssemblerBlock preassemblerBlock;
 #endif
     id assembler;
     SEL assemblerSelector;
@@ -115,7 +118,7 @@
                 <p>Using a block as the assembler will sometimes be more convient than setting an assembler object.</p>
     @param      block of code to be executed after a parser is matched.
 */
-@property (nonatomic, retain) void (^assemblerBlock)(PKAssembly *);
+@property (nonatomic, retain) PKAssemblerBlock assemblerBlock;
 
 /*!
     @property   preassemblerBlock
@@ -125,7 +128,7 @@
                 <p>Using a block as the preassembler will sometimes be more convient than setting an preassembler object.</p>
     @param      block of code to be executed before a parser is matched.
  */
-@property (nonatomic, retain) void (^preassemblerBlock)(PKAssembly *);
+@property (nonatomic, retain) PKAssemblerBlock preassemblerBlock;
 #endif
 
 /*!
