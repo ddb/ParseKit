@@ -3245,7 +3245,6 @@
 				ARCHS = (
 					i386,
 					x86_64,
-					ppc,
 				);
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -3285,7 +3284,6 @@
 				ARCHS = (
 					i386,
 					x86_64,
-					ppc,
 				);
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
