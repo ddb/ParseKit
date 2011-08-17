@@ -445,7 +445,7 @@
 
 
 - (void)doJSParser {
-    TDJavaScriptParser *jsp = [TDJavaScriptParser parser];
+    TDJavaScriptParser *jsp = (TDJavaScriptParser *)[TDJavaScriptParser parser];
     NSString *s = @"for( ; true; true) {}";
     jsp.tokenizer.string = s;
 //    PKTokenAssembly *a = [PKTokenAssembly assemblyWithTokenizer:jsp.tokenizer];
@@ -469,10 +469,21 @@
 }
 
 
+- (void)doTestGrammar {
+    
+	NSString *g = @"@start = sentence+;sentence = adjectives 'beer' '.';adjectives = cold adjective*;adjective = cold | freezing;cold = 'cold';freezing = 'freezing';";
+    PKParser *p = [[PKParserFactory factory] parserFromGrammar:g assembler:self];
+    NSString *s = @"cold freezing beer.";
+    PKAssembly *res = [p completeMatchFor:[PKTokenAssembly assemblyWithString:s]];
+}
+
 
 
 - (IBAction)run:(id)sender {
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
+    
+    [self doTestGrammar];
     
 //    [self doPlistParser];
 //    [self doHtmlSyntaxHighlighter];
@@ -481,7 +492,7 @@
 
 //    [self doJSParser];
     
-    [self doProf];
+//    [self doProf];
 
     //[self doJavaScriptGrammarParser];
     
