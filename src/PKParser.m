@@ -74,7 +74,7 @@
 
 
 - (NSSet *)allMatchesFor:(NSSet *)inAssemblies {
-    NSAssert1(0, @"-[PKParser %s] must be overriden", _cmd);
+    NSAssert1(0, @"%s must be overriden", __PRETTY_FUNCTION__);
     return nil;
 }
 
