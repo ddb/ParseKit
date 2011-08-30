@@ -55,7 +55,7 @@ static PKTokenEOF *EOFToken = nil;
 }
 
 
-- (void)release {
+- (oneway void)release {
     // do nothing
 }
 
