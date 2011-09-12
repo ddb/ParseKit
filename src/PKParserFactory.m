@@ -659,8 +659,9 @@ void PKReleaseSubparserTree(PKParser *p) {
 
 
 - (void)parser:(PKParser *)p didMatchCallback:(PKAssembly *)a {
-    PKToken *selNameTok = [a pop];
-    NSString *selName = [NSString stringWithFormat:@"%@:", selNameTok.stringValue];
+    PKToken *selNameTok2 = [a pop];
+    PKToken *selNameTok1 = [a pop];
+    NSString *selName = [NSString stringWithFormat:@"%@:%@:", selNameTok1.stringValue, selNameTok2.stringValue];
     [a push:selName];
 }
 

@@ -198,11 +198,13 @@
 }
 
 
-// selector             = Word ':';
+// selector             = LowercaseWord ':' LowercaseWord ':';
 - (PKCollectionParser *)selectorParser {
     if (!selectorParser) {
         self.selectorParser = [PKTrack track];
         selectorParser.name = @"selector";
+        [selectorParser add:[PKLowercaseWord word]];
+        [selectorParser add:[[PKSymbol symbolWithString:@":"] discard]];
         [selectorParser add:[PKLowercaseWord word]];
         [selectorParser add:[[PKSymbol symbolWithString:@":"] discard]];
     }
