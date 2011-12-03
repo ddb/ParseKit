@@ -118,7 +118,7 @@ typedef void (^PKAssemblerBlock)(PKParser *, PKAssembly *);
                 <p>Using a block as the assembler will sometimes be more convient than setting an assembler object.</p>
     @param      block of code to be executed after a parser is matched.
 */
-@property (nonatomic, retain) PKAssemblerBlock assemblerBlock;
+@property (nonatomic, copy) PKAssemblerBlock assemblerBlock;
 
 /*!
     @property   preassemblerBlock
@@ -128,7 +128,7 @@ typedef void (^PKAssemblerBlock)(PKParser *, PKAssembly *);
                 <p>Using a block as the preassembler will sometimes be more convient than setting an preassembler object.</p>
     @param      block of code to be executed before a parser is matched.
  */
-@property (nonatomic, retain) PKAssemblerBlock preassemblerBlock;
+@property (nonatomic, copy) PKAssemblerBlock preassemblerBlock;
 #endif
 
 /*!
