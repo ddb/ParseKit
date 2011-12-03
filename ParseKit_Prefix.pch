@@ -6,4 +6,4 @@
     #import <Foundation/Foundation.h>
 #endif
 
-#define PK_INCLUDE_TWITTER_STATE 1
+#define PK_INCLUDE_TWITTER_STATE 0
