@@ -6,6 +6,7 @@
 //  Copyright 2010 Todd Ditchendorf. All rights reserved.
 //
 
+#if PK_INCLUDE_TWITTER_STATE
 #import "TDTwitterStateTest.h"
 
 @implementation TDTwitterStateTest
@@ -144,3 +145,4 @@
 //}
 
 @end
+#endif
