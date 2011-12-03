@@ -475,6 +475,7 @@
     PKParser *p = [[PKParserFactory factory] parserFromGrammar:g assembler:self];
     NSString *s = @"cold freezing beer.";
     PKAssembly *res = [p completeMatchFor:[PKTokenAssembly assemblyWithString:s]];
+    res = res;
 }
 
 

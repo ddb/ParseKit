@@ -138,16 +138,16 @@
 }
 
 
-- (void)parser:(PKParser *)p didMatchNull:(PKAssembly *)a { [self didMatchConstant:a]; }
-- (void)parser:(PKParser *)p didMatchTrue:(PKAssembly *)a { [self didMatchConstant:a]; }
-- (void)parser:(PKParser *)p didMatchFalse:(PKAssembly *)a { [self didMatchConstant:a]; }
+- (void)parser:(PKParser *)p didMatchNull:(PKAssembly *)a { [self parser:p didMatchConstant:a]; }
+- (void)parser:(PKParser *)p didMatchTrue:(PKAssembly *)a { [self parser:p didMatchConstant:a]; }
+- (void)parser:(PKParser *)p didMatchFalse:(PKAssembly *)a { [self parser:p didMatchConstant:a]; }
 
-- (void)parser:(PKParser *)p didMatchColon:(PKAssembly *)a { [self didMatchSymbolChar:a]; }
-- (void)parser:(PKParser *)p didMatchComma:(PKAssembly *)a { [self didMatchSymbolChar:a]; }
-- (void)parser:(PKParser *)p didMatchOpenCurly:(PKAssembly *)a { [self didMatchSymbolChar:a]; }
-- (void)parser:(PKParser *)p didMatchCloseCurly:(PKAssembly *)a { [self didMatchSymbolChar:a]; }
-- (void)parser:(PKParser *)p didMatchOpenBracket:(PKAssembly *)a { [self didMatchSymbolChar:a]; }
-- (void)parser:(PKParser *)p didMatchCloseBracket:(PKAssembly *)a { [self didMatchSymbolChar:a]; }
+- (void)parser:(PKParser *)p didMatchColon:(PKAssembly *)a { [self parser:p didMatchSymbolChar:a]; }
+- (void)parser:(PKParser *)p didMatchComma:(PKAssembly *)a { [self parser:p didMatchSymbolChar:a]; }
+- (void)parser:(PKParser *)p didMatchOpenCurly:(PKAssembly *)a { [self parser:p didMatchSymbolChar:a]; }
+- (void)parser:(PKParser *)p didMatchCloseCurly:(PKAssembly *)a { [self parser:p didMatchSymbolChar:a]; }
+- (void)parser:(PKParser *)p didMatchOpenBracket:(PKAssembly *)a { [self parser:p didMatchSymbolChar:a]; }
+- (void)parser:(PKParser *)p didMatchCloseBracket:(PKAssembly *)a { [self parser:p didMatchSymbolChar:a]; }
 
 @synthesize displayString;
 @synthesize defaultAttrs;
