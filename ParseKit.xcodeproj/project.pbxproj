@@ -14,6 +14,8 @@
 		D3126DEC0FFDBC1D00CBF4C4 /* PKNegation.m in Sources */ = {isa = PBXBuildFile; fileRef = D3126D040FFD9BA700CBF4C4 /* PKNegation.m */; };
 		D315DF720FEF59B600D876C8 /* date.grammar in Resources */ = {isa = PBXBuildFile; fileRef = D315DF710FEF59B600D876C8 /* date.grammar */; };
 		D315DF730FEF59B600D876C8 /* date.grammar in Resources */ = {isa = PBXBuildFile; fileRef = D315DF710FEF59B600D876C8 /* date.grammar */; };
+		D319E42A106D8A1F008C63DD /* arithmetic.grammar in Resources */ = {isa = PBXBuildFile; fileRef = D319E429106D8A1F008C63DD /* arithmetic.grammar */; };
+		D319E42B106D8A1F008C63DD /* arithmetic.grammar in Resources */ = {isa = PBXBuildFile; fileRef = D319E429106D8A1F008C63DD /* arithmetic.grammar */; };
 		D319E42E106D8A31008C63DD /* TDArithmeticAssembler.m in Sources */ = {isa = PBXBuildFile; fileRef = D319E42D106D8A31008C63DD /* TDArithmeticAssembler.m */; };
 		D319E42F106D8A31008C63DD /* TDArithmeticAssembler.m in Sources */ = {isa = PBXBuildFile; fileRef = D319E42D106D8A31008C63DD /* TDArithmeticAssembler.m */; };
 		D31A15260F6DE449002AFDF1 /* javascript.grammar in Resources */ = {isa = PBXBuildFile; fileRef = D31A15250F6DE449002AFDF1 /* javascript.grammar */; };
@@ -2758,6 +2760,7 @@
 				D315DF730FEF59B600D876C8 /* date.grammar in Resources */,
 				D34BAC9A0FF8A9AD00D7773A /* xpath1_0.grammar in Resources */,
 				D3668293101D2C000008632C /* erb.grammar in Resources */,
+				D319E42B106D8A1F008C63DD /* arithmetic.grammar in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2816,6 +2819,7 @@
 				D355C8840FEB4B94006A91A4 /* proto.grammar in Resources */,
 				D315DF720FEF59B600D876C8 /* date.grammar in Resources */,
 				D3668292101D2BFA0008632C /* erb.grammar in Resources */,
+				D319E42A106D8A1F008C63DD /* arithmetic.grammar in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3607,7 +3611,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
-				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GCC_VERSION = 4.2;
 				HEADER_SEARCH_PATHS = "$(LIBXML_PATH)";
 				INFOPLIST_FILE = "test/Tests-Info.plist";
@@ -3654,7 +3658,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
-				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GCC_VERSION = 4.2;
 				HEADER_SEARCH_PATHS = "$(LIBXML_PATH)";
 				INFOPLIST_FILE = "test/Tests-Info.plist";
@@ -3688,7 +3692,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				PRODUCT_NAME = parsekit;
-				SDKROOT = iphoneos3.0;
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -3706,7 +3710,7 @@
 				OTHER_LDFLAGS = "";
 				PREBINDING = NO;
 				PRODUCT_NAME = parsekit;
-				SDKROOT = iphoneos3.0;
+				SDKROOT = iphoneos;
 				ZERO_LINK = NO;
 			};
 			name = Release;
