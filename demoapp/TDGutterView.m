@@ -49,12 +49,12 @@
     NSPoint p2 = NSMakePoint(rectWidth + 2., rect.size.height);
     [NSBezierPath strokeLineFromPoint:p1 toPoint:p2];
     
-    if (!lineNumberRects.count) {
+    if (![lineNumberRects count]) {
         return;
     }
     
     NSUInteger i = startLineNumber;
-    NSUInteger count = i + lineNumberRects.count;
+    NSUInteger count = i + [lineNumberRects count];
     
     for ( ; i < count; i++) {
         NSRect r = [[lineNumberRects objectAtIndex:i - startLineNumber] rectValue];

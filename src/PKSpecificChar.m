@@ -23,8 +23,8 @@
 
 
 - (id)initWithSpecificChar:(PKUniChar)c {
-    if (self = [super initWithString:[NSString stringWithFormat:@"%C", c]]) {
-        
+    self = [super initWithString:[NSString stringWithFormat:@"%C", c]];
+    if (self) {
     }
     return self;
 }

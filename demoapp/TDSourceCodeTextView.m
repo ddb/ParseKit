@@ -83,7 +83,7 @@
     NSUInteger index = visibleGlyphRange.location;
     NSUInteger length = index + visibleGlyphRange.length;
 
-    *outStart = [self lineNumberForIndex:index + 1];
+    (*outStart) = [self lineNumberForIndex:index + 1];
     
     while (index < length) {
         NSRange r = [s lineRangeForRange:NSMakeRange(index, 0)];
@@ -93,7 +93,7 @@
         [result addObject:[NSValue valueWithRect:rect]];
     }
     
-    *outRects = result;
+    (*outRects) = result;
 }
 
 
