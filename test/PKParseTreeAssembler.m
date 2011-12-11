@@ -111,6 +111,7 @@
 
 
 - (void)didMatchRuleNamed:(NSString *)name assembly:(PKAssembly *)a {
+    //NSLog(@"%s %@ %@", __PRETYY_FUNCTION__, name, a);
     PKParseTree *current = [self currentFrom:a];
 
     NSArray *origChildren = [[[current children] mutableCopy] autorelease];
@@ -161,6 +162,7 @@
 
 
 - (void)parser:(PKParser *)p didMatchToken:(PKAssembly *)a {
+    //NSLog(@"%s %@", __PRETYY_FUNCTION__, a);
     PKParseTree *current = [self currentFrom:a];
     if ([current isMatched]) return;
     
